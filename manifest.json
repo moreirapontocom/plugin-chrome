@@ -1,0 +1,41 @@
+// Open file in browser: chrome-extension://kclgjkjoamljganbakngfdoemgkfmihi/popup.js
+
+{
+    "manifest_version": 2,
+    "name": "Empreenda Ecommerce",
+    "description": "Esta extensão serve para fazer as compras no Ali Express",
+	"version": "1.0",
+    "browser_action": {
+        "default_icon": "icon.png",
+        // "default_popup": "popup.html",
+        "default_title": "e-Editora"
+    },
+    "permissions": [
+		"activeTab",
+		"https://aliexpress.com/*",
+		"https://*.aliexpress.com/*"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"https://pt.aliexpress.com/*",
+				"https://aliexpress.com/*"
+			],
+			"js": ["jquery-3.2.1.min.js","page-product.js"]
+		},
+		{
+			"matches": [
+				"https://shoppingcart.aliexpress.com/shopcart/*"
+			],
+			"js": ["jquery-3.2.1.min.js","page-cart.js"]
+		},
+		{
+			"matches": [
+				"https://shoppingcart.aliexpress.com/order/*"
+			],
+			"js": ["jquery-3.2.1.min.js","page-shipping-form.js"]
+		}
+	]
+}
+
+// shoppingcart
