@@ -2,21 +2,27 @@
 
 {
     "manifest_version": 2,
-    "name": "Empreenda Ecommerce",
-    "description": "Esta extensão serve para fazer as compras no Ali Express",
+    "name": "Truo",
+    "description": "truo.com.br - Esta extensão serve para fazer as compras no Ali Express",
 	"version": "1.0",
     "browser_action": {
         "default_icon": "icon.png",
         // "default_popup": "popup.html",
-        "default_title": "e-Editora"
+        "default_title": "Truo"
     },
     "permissions": [
 		"activeTab",
+		"notifications",
 		"https://aliexpress.com/*",
 		"https://*.aliexpress.com/*"
 	],
+	"web_accessible_resources": [
+		"icon.png"
+	],
 	"content_scripts": [
 		{
+			// https://pt.aliexpress.com/store/product/Makibes-G03-Smart-Bracelet-IP68-Waterproof-Smart-Band-Heart-Rate-Monitor-Call-Reminder-GPS-chip-Sports/1086467_32820336414.html?spm=a2g03.11010108.26.4.40d9a8c9qDwH9K#ee
+			// Don't forget to append #ee to URL
 			"matches": [
 				"https://pt.aliexpress.com/*",
 				"https://aliexpress.com/*"
@@ -34,8 +40,16 @@
 				"https://shoppingcart.aliexpress.com/order/*"
 			],
 			"js": ["jquery-3.2.1.min.js","page-shipping-form.js"]
+		},
+		{
+			// https://icashier.alipay.com/payment/checkout.htm?orderId=0811006012007b4b8d6f65ded8c28641&locale=pt_BR
+			"matches": [
+				"https://icashier.alipay.com/payment/checkout.htm*"
+			],
+			"js": ["jquery-3.2.1.min.js","page-payment.js"]
 		}
+
+		// https://icashier.alipay.com/payment/payment-result.htm*
+		// This is the Billet's URL
 	]
 }
-
-// shoppingcart

@@ -12,7 +12,14 @@ var proceed_to_cart = function() {
 
 window.onload = function() {
 
-	$('#j-add-cart-btn').get(0).click();
-	proceed_to_cart();
+	var plugin_hash = window.location.hash;
+	if ( plugin_hash == '#ee' ) {
+
+		localStorage.setItem('AAA_checkout_method', '47716891804');
+
+		$('#j-add-cart-btn').get(0).click();
+		proceed_to_cart();
+
+	}
 
 }
