@@ -19,6 +19,12 @@
 	"web_accessible_resources": [
 		"icon.png"
 	],
+	"externally_connectable": {
+		"matches": [
+			"http://192.56.1.30/*",
+			"https://*.truo.com.br/*"
+		]
+	},
 	"content_scripts": [
 		{
 			// https://pt.aliexpress.com/store/product/Makibes-G03-Smart-Bracelet-IP68-Waterproof-Smart-Band-Heart-Rate-Monitor-Call-Reminder-GPS-chip-Sports/1086467_32820336414.html?spm=a2g03.11010108.26.4.40d9a8c9qDwH9K#ee
