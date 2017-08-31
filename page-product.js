@@ -12,14 +12,16 @@ var proceed_to_cart = function() {
 
 window.onload = function() {
 
-	var plugin_hash = window.location.hash;
-	if ( plugin_hash == '#ee' ) {
+	chrome.runtime.sendMessage({ truo_action: 'button' });
+	chrome.storage.local.get('truoAction', function(action) {
 
-		localStorage.setItem('AAA_checkout_method', '47716891804');
+	    if ( action.truoAction == 'addToCart' ) {
 
-		$('#j-add-cart-btn').get(0).click();
-		proceed_to_cart();
+			$('#j-add-cart-btn').get(0).click();
+			// proceed_to_cart();
+			alert('Go shopping!!');
 
-	}
+		}
+	});
 
 }

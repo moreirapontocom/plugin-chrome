@@ -1,0 +1,33 @@
+.truo-sync-bar {
+    background-color: #f2f2f2;
+    color: #414141;
+    padding: 20px 10px;
+    margin-bottom: 30px;
+    height: auto;
+    overflow: hidden;
+    clear: both;
+    font-size: 1rem;
+}
+
+.truo-sync-bar > .text {
+    line-height: 1.7rem;
+    float: left;
+}
+
+.truo-sync-bar > .text > span {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: .9rem;
+}
+
+.truo-sync-bar .btn-primary,
+.truo-sync-bar .btn-primary:hover {
+    background-color: #34495e;
+    color: white;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    border: none;
+    padding: 7px 20px;
+    cursor: pointer;
+    float: right;
+}
