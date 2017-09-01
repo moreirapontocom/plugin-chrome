@@ -1,23 +1,38 @@
+chrome.runtime.sendMessage({ truo_action: 'button' });
+
 function setPaymentMethod() {
 
-	if ( $('li[data-channel-name="BOLETO"]').length > 0 ) {
+	chrome.storage.local.get('buyer', function(buyer) {
 
-		$('ul.channel-tab').find('li.j-channel-item').each(function() {
-			$(this).removeClass('channel-active');
-		});
-		$('li[data-channel-name="BOLETO"]').addClass('channel-active').get(0).click();
+		if ( $('li[data-channel-name="BOLETO"]').length > 0 ) {
 
-		$('input[name="cpf"]').val( localStorage.getItem('AAA_checkout_method') );
-		$('#j-paynow').click();
+			var cpf_onlyNumbers = buyer.buyer.cpf;
 
-	} else
-		setTimeout('setPaymentMethod', 2000);
+			$('ul.channel-tab').find('li.j-channel-item').each(function() {
+				$(this).removeClass('channel-active');
+			});
+			$('li[data-channel-name="BOLETO"]').addClass('channel-active').get(0).click();
+
+			cpf_onlyNumbers = cpf_onlyNumbers.replace(/\D/g,'');
+			$('input[name="cpf"]').val( cpf_onlyNumbers );
+
+			chrome.storage.local.set({ truoAction: 'backToAliExpress' });
+			$('#j-paynow').click();
+
+		} else
+			setTimeout('setPaymentMethod', 2000);
+
+	});
 
 }
 
 window.onload = function() {
 
-	if ( localStorage.getItem('AAA_checkout_method') !== undefined )
-		setPaymentMethod();
+	chrome.storage.local.get('truoAction', function(action) {
+
+		if ( action.truoAction == 'generateBillet' )
+			setPaymentMethod();
+
+	});
 
 }

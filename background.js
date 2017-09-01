@@ -68,9 +68,20 @@ chrome.runtime.onInstalled.addListener(function() {
 
                     chrome.storage.local.set({
                         truoAction: 'addToCart',
-                        buyerName: request.buyerName,
-                        buyerCPF: request.buyerCPF,
-                        buyerEmail: request.buyerEmail,
+                        checkoutMessage: request.checkoutMessage,
+                        buyer: {
+                            name: request.buyer.name,
+                            cpf: request.buyer.cpf,
+                            email: request.buyer.email,
+                            country: request.buyer.country,
+                            address: request.buyer.address,
+                            address2: request.buyer.address2,
+                            city: request.buyer.city,
+                            province: request.buyer.province,
+                            zip: request.buyer.zip,
+                            phoneCountry: request.buyer.phoneCountry,
+                            mobileNo: request.buyer.mobileNo
+                        }
                     });
 
                     chrome.tabs.create({

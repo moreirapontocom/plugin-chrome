@@ -1,3 +1,5 @@
+chrome.runtime.sendMessage({ truo_action: 'button' });
+
 function create_sync_bar() {
 
     var ali_box = $('.col-xs-60 > .grid-col-container:nth-child(4) .me-ui-box'),
@@ -13,7 +15,7 @@ function create_sync_bar() {
 
     // Ask extension to sync
 
-    var syncButton = document.getElementById('js-truo-sync-orders');
+    var syncButton = $('#js-truo-sync-orders');
     syncButton.addEventListener("click", function() {
 
         chrome.runtime.sendMessage({ truo_action: 'sync_orders' }, function(response) {
@@ -26,7 +28,6 @@ function create_sync_bar() {
 
 window.onload = function() {
 
-    chrome.runtime.sendMessage({ truo_action: 'button' });
     create_sync_bar();
 
 }

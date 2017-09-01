@@ -44,46 +44,53 @@
 	"content_scripts": [
 
 		{
-			// Inside Truo's Pending Orders page
-			// "matches": [ "https://app.truo.com.br/*" ],
-			"matches": [ "http://teste.com/*" ],
+			// Step 1 - User clicks to order product inside Truo's Pending Orders page
+			"matches": [ "http://teste.com/*", "https://app.truo.com.br/*" ],
 			"js": [ "jquery-3.2.1.min.js", "page-truo.js" ]
 		},
 
 		{
-			// https://pt.aliexpress.com/store/product/Makibes-G03-Smart-Bracelet-IP68-Waterproof-Smart-Band-Heart-Rate-Monitor-Call-Reminder-GPS-chip-Sports/1086467_32820336414.html?spm=a2g03.11010108.26.4.40d9a8c9qDwH9K#ee
-			// Don't forget to append #ee to URL
-			"matches": [
-				"https://pt.aliexpress.com/*",
-				"https://aliexpress.com/*"
-			],
+			// Step 2 - Single product page. Add to cart
+			"matches": [ "https://aliexpress.com/item/*", "https://*.aliexpress.com/item/*" ],
 			"js": ["jquery-3.2.1.min.js","page-product.js"]
 		},
+
 		{
-			"matches": [
-				"https://shoppingcart.aliexpress.com/shopcart/*"
-			],
+			// Step 3 - Shopping cart page
+			"matches": [ "https://shoppingcart.aliexpress.com/shopcart/*" ],
 			"js": ["jquery-3.2.1.min.js","page-cart.js"]
 		},
+
 		{
+			// Step 4 - Order form fulfilment
 			"matches": [
 				"https://shoppingcart.aliexpress.com/order/*"
 			],
 			"js": ["jquery-3.2.1.min.js","page-shipping-form.js"]
 		},
+
 		{
+			// Step 5 - Payment fulfilment (billet or credit)
 			"matches": [
 				"https://icashier.alipay.com/payment/checkout.htm*"
 			],
 			"js": ["jquery-3.2.1.min.js","page-payment.js"]
 		},
+
 		{
+			// Step 6 - Billet page
+			"matches": [ "https://icashier.alipay.com/payment/payment-result.htm*" ],
+			"js": [ "jquery-3.2.1.min.js", "page-billet.js" ]
+		},
+
+		{
+			// Step 7 - Order form fulfilment
 			"matches": [ "https://trade.aliexpress.com/*" ],
 			"js": [ "jquery-3.2.1.min.js", "page-aliexpress.js" ],
 			"css": [ "styles.css" ]
 		}
 
-		// https://icashier.alipay.com/payment/payment-result.htm*
+		// 
 		// This is the Billet's URL
 	]
 }
