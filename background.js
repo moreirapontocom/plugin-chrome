@@ -1,33 +1,5 @@
 chrome.runtime.onInstalled.addListener(function() {
 
-    /*
-    chrome.tabs.query({ 'active': true }, function(tab) {
-
-        var match = 'https://trade.aliexpress.com/';
-            regex = new RegExp( match ),
-            current_tab = tab[0];
-
-        if ( regex.test( current_tab.url ) )
-            console.log('achou');
-
-        // chrome.tabs.executeScript(null, {
-        //     file: "content_script.js"
-        // });
-    });
-    */
-
-    /*
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://api.example.com/data.json", true);
-    xhr.onreadystatechange = function() {
-        if ( xhr.readyState == 4 ) {
-            // JSON.parse does not evaluate the attacker's scripts.
-            var resp = JSON.parse(xhr.responseText);
-        }
-    }
-    xhr.send();
-    */
-
     chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
 
@@ -46,7 +18,8 @@ chrome.runtime.onInstalled.addListener(function() {
                 if ( regex.test( sender.tab.url ) ) {
                     sendResponse({ status: "I will" });
 
-                    chrome.tabs.executeScript({ code: "alert('Sincronizou!')" });
+                    // chrome.tabs.executeScript({ code: "alert('Sincronizou!')" });
+                    chrome.tabs.executeScript({ file: "sync.js" });
 
                 }
 

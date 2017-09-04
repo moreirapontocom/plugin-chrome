@@ -8,14 +8,14 @@ function create_sync_bar() {
                                 'Truo' +
                                 '<span>&raquo; <a href="https://app.truo.com.br/?utm_source=aliexpress-orders" target="_blank">app.truo.com.br</a></span>' +
                             '</div>' +
-                            '<button type="button" class="btn-primary" id="js-truo-sync-orders">Sincronizar vendas</button>' +
+                            '<button type="button" class="btn-primary" id="js-truo-sync-orders">Sincronizar pedidos</button>' +
                         '</div>';
 
     ali_box.prepend( truo_sync_bar );
 
     // Ask extension to sync
 
-    var syncButton = $('#js-truo-sync-orders');
+    var syncButton = document.getElementById('js-truo-sync-orders');
     syncButton.addEventListener("click", function() {
 
         chrome.runtime.sendMessage({ truo_action: 'sync_orders' }, function(response) {
@@ -23,6 +23,12 @@ function create_sync_bar() {
         });
 
     }, false);
+
+    chrome.storage.local.get('is_sync_running', function(action) {
+        if ( action.is_sync_running == true ) {
+            $('#js-truo-sync-orders').trigger('click');
+        }
+    });
 
 }
 
