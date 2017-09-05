@@ -1,3 +1,49 @@
+var serialize = function(obj) {
+    var str = [];
+    for ( var p in obj )
+        if ( obj.hasOwnProperty(p) ) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+    return str.join("&");
+}
+
+function post_to_api(params) {
+    
+    return new Promise(function (resolve, reject) {
+
+        var xhr = new XMLHttpRequest(),
+            data = {
+                token: params.token,
+                product_url: params.product_url
+            },
+            data = serialize(data);
+        xhr.open("POST", params.url, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+
+            // var resp = JSON.parse(xhr.responseText);
+            var response = JSON.parse(xhr.response);
+            resolve(response);
+            console.log('back: ', response.code);
+            // if ( response.status == 200 )
+                // sendResponse({ status: 200 });
+
+        }
+        // xhr.onreadystatechange = function() {
+        //     if ( xhr.readyState == 4 ) {
+
+        //         // JSON.parse does not evaluate the attacker's scripts.
+        //         var resp = JSON.parse(xhr.responseText);
+        //         if ( resp.code == 200 )
+        //             sendResponse({ status: 200 });
+
+        //     }
+        // }
+        xhr.send(data);
+
+    });
+}
+
 chrome.runtime.onInstalled.addListener(function() {
 
     chrome.runtime.onMessage.addListener(
@@ -25,12 +71,16 @@ chrome.runtime.onInstalled.addListener(function() {
 
             } else if ( request.truo_action == 'import_current' ) {
 
-                sendResponse({
-                    status: 'I will',
-                    code: 200
-                });
-
-                // Import this URL into Truo: sender.tab.url
+                var xhr = new XMLHttpRequest(),
+                    data = {
+                        token: '8ee68f53571a0c7fb6867e3498f4aec78f5afe94',
+                        product_url: sender.tab.url
+                    },
+                    data = serialize(data);
+                xhr.open("POST", 'http://192.56.1.30/empreendaecommerce/api/public/v1/products/import', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.send(data);
+                sendResponse({ code: 200 });
 
             }
         }

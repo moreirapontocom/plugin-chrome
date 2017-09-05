@@ -51,21 +51,21 @@
 
 		{
 			// Step 2 - Single product page. Add to cart
-			"matches": [ "https://aliexpress.com/item/*", "https://*.aliexpress.com/item/*" ],
+			"matches": [ "*://aliexpress.com/item/*", "*://*.aliexpress.com/item/*" ],
 			"js": ["jquery-3.2.1.min.js","page-product.js"],
 			"css": [ "styles.css" ]
 		},
 
 		{
 			// Step 3 - Shopping cart page
-			"matches": [ "https://shoppingcart.aliexpress.com/shopcart/*" ],
+			"matches": [ "*://shoppingcart.aliexpress.com/shopcart/*" ],
 			"js": ["jquery-3.2.1.min.js","page-cart.js"]
 		},
 
 		{
 			// Step 4 - Order form fulfilment (buyer infos, addresses, notes to seller, etc)
 			"matches": [
-				"https://shoppingcart.aliexpress.com/order/*"
+				"*://shoppingcart.aliexpress.com/order/*"
 			],
 			"js": ["jquery-3.2.1.min.js","page-shipping-form.js"]
 		},
@@ -73,20 +73,20 @@
 		{
 			// Step 5 - Payment fulfilment (select billet or credit)
 			"matches": [
-				"https://icashier.alipay.com/payment/checkout.htm*"
+				"*://icashier.alipay.com/payment/checkout.htm*"
 			],
 			"js": ["jquery-3.2.1.min.js","page-payment.js"]
 		},
 
 		{
 			// Step 6 - Billet page
-			"matches": [ "https://icashier.alipay.com/payment/payment-result.htm*" ],
+			"matches": [ "*://icashier.alipay.com/payment/payment-result.htm*" ],
 			"js": [ "jquery-3.2.1.min.js", "page-billet.js" ]
 		},
 
 		{
 			// Step 7 - My Ali Express
-			"matches": [ "https://trade.aliexpress.com/*" ],
+			"matches": [ "*://trade.aliexpress.com/*" ],
 			"js": [ "jquery-3.2.1.min.js", "page-aliexpress.js" ],
 			"css": [ "styles.css" ]
 		}
