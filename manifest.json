@@ -52,7 +52,8 @@
 		{
 			// Step 2 - Single product page. Add to cart
 			"matches": [ "https://aliexpress.com/item/*", "https://*.aliexpress.com/item/*" ],
-			"js": ["jquery-3.2.1.min.js","page-product.js"]
+			"js": ["jquery-3.2.1.min.js","page-product.js"],
+			"css": [ "styles.css" ]
 		},
 
 		{

@@ -25,12 +25,34 @@ var proceed_to_cart = function() {
 
 chrome.storage.local.get('truoAction', function(action) {
 
-console.log(action.truoAction);
-
+	// When user come from Truo
 	if ( action.truoAction == 'addToCart' ) {
 
 		$('#j-add-cart-btn').get(0).click(); // Add this item to cart
 		proceed_to_cart();
+
+	} else {
+
+		// When user come from other refer or is just navigating on Ali Express
+		// Insert our plugin button to import into Truo's products list
+
+		var body = $('body'),
+			button = '<div class="truo-button-float" id="js-truo-button-float">' + 
+						'<button type="button">T</button>' + 
+					 '</div>';
+
+		body.append( button );
+
+		var buttonClick = document.getElementById('js-truo-button-float');
+
+		buttonClick.addEventListener('click', function() {
+			chrome.runtime.sendMessage({ truo_action: 'import_current' }, function(response) {
+
+				if ( response.code == 200 )
+					alert('Pronto!');
+
+			});
+		});
 
 	}
 

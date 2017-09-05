@@ -23,11 +23,20 @@ chrome.runtime.onInstalled.addListener(function() {
 
                 }
 
+            } else if ( request.truo_action == 'import_current' ) {
+
+                sendResponse({
+                    status: 'I will',
+                    code: 200
+                });
+
+                // Import this URL into Truo: sender.tab.url
+
             }
         }
     );
 
-    // Listening for messages outside the extension (background or pages)
+    // Listening for messages outside the extension
     chrome.runtime.onMessageExternal.addListener(
         function(request, sender, sendResponse) {
 

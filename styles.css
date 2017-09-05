@@ -31,3 +31,40 @@
     cursor: pointer;
     float: right;
 }
+
+
+
+.truo-button-float {
+    position: fixed;
+    z-index: 99999;
+    bottom: 10%;
+    right: 10%;
+    transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+}
+
+.truo-button-float button {
+    background-color: #34495e;
+    border: solid 2px white;
+    padding: 10px 20px;
+    font-size: 30px;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    line-height: 38px;
+    color: white;
+    transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    box-shadow: #414141 0 3px 8px;
+    -moz-box-shadow: #414141 0 3px 8px;
+}
+
+.truo-button-float:hover {
+    bottom: 9.7%;
+}
+
+.truo-button-float:hover button {
+    transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    box-shadow: none;
+    -moz-box-shadow: none;
+}
