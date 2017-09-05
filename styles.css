@@ -58,6 +58,10 @@
     -moz-box-shadow: #414141 0 3px 8px;
 }
 
+.truo-button-float.warning button {
+    background-color: #F44336 !important;
+}
+
 .truo-button-float:hover {
     bottom: 9.7%;
 }

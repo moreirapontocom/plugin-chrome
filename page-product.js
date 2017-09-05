@@ -23,37 +23,57 @@ var proceed_to_cart = function() {
 
 }
 
-chrome.storage.local.get('truoAction', function(action) {
+function import_current() {
+	chrome.runtime.sendMessage({ truo_action: 'import_current' }, function(response) {
+		if ( response.code == 200 )
+			alert('Pronto!');
+	});
+}
 
-	// When user come from Truo
-	if ( action.truoAction == 'addToCart' ) {
+window.onload = function() {
 
-		$('#j-add-cart-btn').get(0).click(); // Add this item to cart
-		proceed_to_cart();
+	chrome.storage.local.get('truoAction', function(action) {
 
-	} else {
+		// When user come from Truo
+		if ( action.truoAction == 'addToCart' ) {
 
-		// When user come from other refer or is just navigating on Ali Express
-		// Insert our plugin button to import into Truo's products list
+			$('#j-add-cart-btn').get(0).click(); // Add this item to cart
+			proceed_to_cart();
 
-		var body = $('body'),
-			button = '<div class="truo-button-float" id="js-truo-button-float">' + 
-						'<button type="button">T</button>' + 
-					 '</div>';
+		} else {
 
-		body.append( button );
+			// When user come from other refer or is just navigating on Ali Express
+			// Insert our plugin button to import into Truo's products list
 
-		var buttonClick = document.getElementById('js-truo-button-float');
+			var shipping_infos = $('body').find('#j-product-operate-wrap'),
+				shipping_to = shipping_infos.find('#j-shipping-country'),
+				shipping_company = shipping_infos.find('#j-shipping-company')
+				button_class_warning = 'warning';
 
-		buttonClick.addEventListener('click', function() {
-			chrome.runtime.sendMessage({ truo_action: 'import_current' }, function(response) {
+			if ( shipping_infos.length > 0 && shipping_to.html() == 'Brazil' && shipping_company.html() == 'China Post Registered Air Mail' )
+				button_class_warning = '';
 
-				if ( response.code == 200 )
-					alert('Pronto!');
+			var body = $('body'),
+				button = '<div class="truo-button-float ' + button_class_warning + '" id="js-truo-button-float">' + 
+							'<button type="button">T</button>' + 
+						'</div>',
+				buttonClick;
+
+			body.append( button );
+
+			buttonClick = document.getElementById('js-truo-button-float');
+			buttonClick.addEventListener('click', function() {
+
+				if ( $('.truo-button-float').hasClass('warning') ) {
+					if ( confirm('Parece que este produto não é entregue pelo China Air Post Mail.\nTem certeza?') )
+						import_current();
+				} else
+					import_current();
 
 			});
-		});
 
-	}
+		}
 
-});
+	});
+
+}
