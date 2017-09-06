@@ -28,10 +28,10 @@ function import_current() {
 	chrome.runtime.sendMessage({ truo_action: 'import_current' }, function(response) {
 		if ( response.code == 200 ) {
 
-			// Token connection
+			// Socket connection
 			var socket = io.connect('https://app.truo.com.br:8080');
 			socket.emit('import', { userToken: '8ee68f53571a0c7fb6867e3498f4aec78f5afe94' });
-			// end Token connection
+			// end Socket connection
 
 			$('.truo-button-float')
 				.removeClass('disabled')	
