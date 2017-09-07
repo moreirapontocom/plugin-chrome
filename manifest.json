@@ -51,8 +51,7 @@
 
 		{
 			// Step 2 - Single product page. Add to cart
-			// Using Browserify to "compile" all socket.io dependencies into socket.io.js
-			// browserify -s node_modules/../index.js > socket.io.js
+			// Socket.io saved from https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js
 			"matches": [ "*://aliexpress.com/item/*", "*://*.aliexpress.com/item/*", "*://*.aliexpress.com/store/product/*" ],
 			"js": ["jquery-3.2.1.min.js","socket.io.js","page-product.js"],
 			"css": [ "styles.css" ]

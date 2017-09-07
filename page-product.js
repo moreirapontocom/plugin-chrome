@@ -30,7 +30,10 @@ function import_current() {
 
 			// Socket connection
 			var socket = io.connect('https://app.truo.com.br:8080');
-			socket.emit('import', { userToken: '8ee68f53571a0c7fb6867e3498f4aec78f5afe94' });
+			socket.emit('should_update_products', {
+				userToken: '8ee68f53571a0c7fb6867e3498f4aec78f5afe94',
+				product_url: response.product_url
+			});
 			// end Socket connection
 
 			$('.truo-button-float')

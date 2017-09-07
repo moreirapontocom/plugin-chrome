@@ -76,9 +76,10 @@ chrome.runtime.onInstalled.addListener(function() {
                 //
 
                 var xhr = new XMLHttpRequest(),
+                    the_product_url = sender.tab.url,
                     data = {
                         token: '8ee68f53571a0c7fb6867e3498f4aec78f5afe94',
-                        product_url: sender.tab.url
+                        product_url: the_product_url
                     },
                     data = serialize(data),
                     is_local = false, // CHANGE THIS TO SET ENVIRONMENT AS LOCAL OR PRODUCTION
@@ -87,11 +88,17 @@ chrome.runtime.onInstalled.addListener(function() {
                         prod: 'https://api.truo.com.br/v1/products/import'
                     };
 
-                xhr.open("POST", ( is_local ? env.local : env.prod ) , true);
+                ( is_local ) ?
+                    xhr.open("POST", env.local, true) :
+                    xhr.open("POST", env.prod, true);
+
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.send(data);
 
-                sendResponse({ code: 200 });
+                sendResponse({
+                    code: 200,
+                    product_url: the_product_url
+                });
 
             }
         }
