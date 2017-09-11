@@ -29,9 +29,14 @@ function import_current() {
 		if ( response.code == 200 ) {
 
 			// Socket connection
-			var socket = io.connect('https://app.truo.com.br:8080');
+			var socket = io.connect('https://app.truo.com.br:8080'),
+				stored_token = localStorage.getItem('truo_ext_credentials');
+			
+			stored_token = JSON.parse( stored_token );
+			console.log('page-product.js > import_current() > token: ', stored_token);
+
 			socket.emit('should_update_products', {
-				userToken: '8ee68f53571a0c7fb6867e3498f4aec78f5afe94',
+				userToken: stored_token.token,
 				product_url: response.product_url
 			});
 			// end Socket connection
@@ -46,6 +51,7 @@ function import_current() {
 					.addClass('emoji')	
 					.html('&#x1F44D;')
 					.off('click');
+
 		}
 	});
 
@@ -99,7 +105,11 @@ window.onload = function() {
 
 			// When user come from other refer or is just navigating on Ali Express
 			// Insert our plugin button to import into Truo's products list
-			get_button_importer();
+
+			// First: check if user is logged into Truo
+			chrome.storage.local.get('truo_ext_credentials', function(stored) {
+				get_button_importer();
+			});
 
 		}
 

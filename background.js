@@ -1,3 +1,9 @@
+function check_credentials() {
+    var credentials = localStorage.getItem('truo_ext_credentials');
+    if ( credentials != undefined ) return true;
+    else return false;
+}
+
 var serialize = function(obj) {
     var str = [];
     for ( var p in obj )
@@ -60,45 +66,57 @@ chrome.runtime.onInstalled.addListener(function() {
 
             if ( request.truo_action == 'sync_orders' ) {
 
-                var regex = new RegExp('https://trade.aliexpress.com/');
-                if ( regex.test( sender.tab.url ) ) {
-                    sendResponse({ status: "I will" });
+                if ( check_credentials() ) {
 
-                    // chrome.tabs.executeScript({ code: "alert('Sincronizou!')" });
-                    chrome.tabs.executeScript({ file: "sync.js" });
+                    var regex = new RegExp('https://trade.aliexpress.com/');
+                    if ( regex.test( sender.tab.url ) ) {
+
+                        // sendResponse({ status: "I will" });
+
+                        // chrome.tabs.executeScript({ code: "alert('Sincronizou!')" });
+                        chrome.tabs.executeScript({ file: "sync.js" });
+
+                    }
 
                 }
 
             } else if ( request.truo_action == 'import_current' ) {
 
-                //
-                // Remember to change the environment switch
-                //
+                if ( check_credentials() ) {
 
-                var xhr = new XMLHttpRequest(),
-                    the_product_url = sender.tab.url,
-                    data = {
-                        token: '8ee68f53571a0c7fb6867e3498f4aec78f5afe94',
+                    var stored_token = localStorage.getItem('truo_ext_credentials'),
+                        stored_token = JSON.parse( stored_token );
+
+                    //
+                    // Remember to change the environment switch
+                    //
+
+                    var xhr = new XMLHttpRequest(),
+                        the_product_url = sender.tab.url,
+                        data = {
+                            token: stored_token.token,
+                            product_url: the_product_url
+                        },
+                        data = serialize(data),
+                        is_local = false, // ENVIRONMENT SWITCH
+                        env = {
+                            local: 'http://192.56.1.30/empreendaecommerce/api/public/v1/products/import',
+                            prod: 'https://api.truo.com.br/v1/products/import'
+                        };
+
+                    // ( is_local ) ?
+                    //     xhr.open("POST", env.local, true) :
+                    //     xhr.open("POST", env.prod, true);
+
+                    // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    // xhr.send(data);
+
+                    sendResponse({
+                        code: 200,
                         product_url: the_product_url
-                    },
-                    data = serialize(data),
-                    is_local = false, // CHANGE THIS TO SET ENVIRONMENT AS LOCAL OR PRODUCTION
-                    env = {
-                        local: 'http://192.56.1.30/empreendaecommerce/api/public/v1/products/import',
-                        prod: 'https://api.truo.com.br/v1/products/import'
-                    };
+                    });
 
-                ( is_local ) ?
-                    xhr.open("POST", env.local, true) :
-                    xhr.open("POST", env.prod, true);
-
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                xhr.send(data);
-
-                sendResponse({
-                    code: 200,
-                    product_url: the_product_url
-                });
+                }
 
             }
         }
@@ -116,9 +134,17 @@ chrome.runtime.onInstalled.addListener(function() {
 
                 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 
+                    var user = {
+                        token: request.user.token,
+                        name: request.user.name,
+                        email: request.user.email
+                    }
+                    localStorage.setItem('truo_ext_credentials', JSON.stringify(user));
+
                     chrome.storage.local.set({
                         truoAction: 'addToCart',
                         checkoutMessage: request.checkoutMessage,
+                        truo_ext_credentials: JSON.stringify(user),
                         buyer: {
                             name: request.buyer.name,
                             cpf: request.buyer.cpf,
@@ -143,7 +169,34 @@ chrome.runtime.onInstalled.addListener(function() {
 
             }
 
+            if ( request.truo_action == 'logout' ) {
+
+                chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+
+                    var user = {
+                        token: request.user.token,
+                        name: request.user.name,
+                        email: request.user.email
+                    }
+                    localStorage.removeItem('truo_ext_credentials');
+
+                    chrome.storage.local.clear();
+
+                });
+
+            }
+
         }
     );
 
 });
+
+/*
+function popupSetUserInfos() {
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+
+    });
+
+}
+*/

@@ -73,9 +73,7 @@
 
 		{
 			// Step 5 - Payment fulfilment (select billet or credit)
-			"matches": [
-				"*://icashier.alipay.com/payment/checkout.htm*"
-			],
+			"matches": [ "*://icashier.alipay.com/payment/checkout.htm*" ],
 			"js": ["jquery-3.2.1.min.js","page-payment.js"]
 		},
 
@@ -90,6 +88,12 @@
 			"matches": [ "*://trade.aliexpress.com/*" ],
 			"js": [ "jquery-3.2.1.min.js", "page-aliexpress.js" ],
 			"css": [ "styles.css" ]
+		},
+
+		{
+			// Other pages (general)
+			"matches": [ "*://pt.aliexpress.com/" ],
+			"js": [ "jquery-3.2.1.min.js", "other-pages.js" ]
 		}
 
 	]
