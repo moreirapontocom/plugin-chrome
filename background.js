@@ -173,13 +173,7 @@ chrome.runtime.onInstalled.addListener(function() {
 
                 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 
-                    var user = {
-                        token: request.user.token,
-                        name: request.user.name,
-                        email: request.user.email
-                    }
                     localStorage.removeItem('truo_ext_credentials');
-
                     chrome.storage.local.clear();
 
                 });
