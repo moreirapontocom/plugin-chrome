@@ -4,7 +4,7 @@ function create_sync_bar() {
 
     chrome.storage.local.get('truo_ext_credentials', function(stored) {
 
-        if ( stored.length != undefined ) {
+        if ( stored.truo_ext_credentials ) {
 
             var stored_credentials = stored.truo_ext_credentials.token,
                 ali_box = $('.col-xs-60 > .grid-col-container:nth-child(4) .me-ui-box'),
@@ -39,8 +39,8 @@ function create_sync_bar() {
 
 }
 
-window.onload = function() {
+// window.onload = function() {
 
     create_sync_bar();
 
-}
+// }
