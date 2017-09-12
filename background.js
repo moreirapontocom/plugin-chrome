@@ -104,12 +104,12 @@ chrome.runtime.onInstalled.addListener(function() {
                             prod: 'https://api.truo.com.br/v1/products/import'
                         };
 
-                    // ( is_local ) ?
-                    //     xhr.open("POST", env.local, true) :
-                    //     xhr.open("POST", env.prod, true);
+                    ( is_local ) ?
+                        xhr.open("POST", env.local, true) :
+                        xhr.open("POST", env.prod, true);
 
-                    // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                    // xhr.send(data);
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhr.send(data);
 
                     sendResponse({
                         code: 200,
