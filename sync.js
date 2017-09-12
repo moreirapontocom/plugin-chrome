@@ -5,6 +5,7 @@ function post_updates(updates) {
         if ( stored.truo_ext_credentials ) {
 
             var data = new FormData(),
+                credentials = JSON.parse(stored.truo_ext_credentials),
                 xhr = new XMLHttpRequest(),
                 is_local = false, // ENVIRONMENT SWITCH
                 env = {
@@ -12,10 +13,9 @@ function post_updates(updates) {
                     prod: 'https://api.truo.com.br/v1/products/sync/'
                 };
 
-            data.append("token", stored.truo_ext_credentials.token );
+            data.append("token", credentials.token );
             data.append("orders", JSON.stringify(updates) );
 
-            xhr.withCredentials = true;
             xhr.addEventListener("readystatechange", function () {
                 if ( this.readyState === 4 ) {
                     console.log(this.responseText);
@@ -27,6 +27,7 @@ function post_updates(updates) {
                 xhr.open("POST", env.prod, true);
 
             xhr.setRequestHeader("cache-control", "no-cache");
+            xhr.setRequestHeader("postman-token", "3b5aff00-9e4c-0132-79e6-7b1600facf08");
             xhr.send(data);
 
         }
